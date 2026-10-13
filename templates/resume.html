@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<header class="text-center mb-4">
+    <img
+        src="{{ url_for('static', filename='images/profile.jpg') }}"
+        alt="Моє фото"
+        class="profile-image"
+    >
+    <h1 class="mt-3">Назар Демків</h1>
+    <p>Python Backend Developer</p>
+</header>
+
+<nav class="resume-navigation mb-4">
+    <a href="#about">Про себе</a>
+    <a href="#education">Освіта</a>
+    <a href="#skills">Навички</a>
+    <a href="#technologies">Технології</a>
+    <a href="#projects">Проєкти</a>
+</nav>
+
+<section id="about" class="resume-section">
+    <h2>Про себе</h2>
+    <p>
+        Я вивчаю Python та веброзробку.
+        Мене цікавить створення REST API та робота з базами даних.
+    </p>
+</section>
+
+<section id="education" class="resume-section">
+    <h2>Освіта</h2>
+    <p>Карпатський національний університет імені Василя Стефаника. Інженерія програмного забезпечення</p>
+</section>
+
+<section id="skills" class="resume-section">
+    <h2>Навички</h2>
+    <ul>
+        <li>Python</li>
+        <li>Основи веброзробки</li>
+        <li>Робота з Git</li>
+    </ul>
+</section>
+
+<section id="technologies" class="resume-section">
+    <h2>Технології</h2>
+    <p>Flask, HTML, CSS, Bootstrap, SQL.</p>
+</section>
+
+<section id="projects" class="resume-section">
+    <h2>Досвід роботи та проєкти</h2>
+    <p>
+        pet-project "To-do list"
+    </p>
+</section>
+
+{% endblock %}
