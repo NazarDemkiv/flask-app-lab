@@ -1,6 +1,5 @@
-from flask import Flask, render_template
-
-app = Flask(__name__)
+from . import app
+from flask import render_template, request, redirect, abort
 
 @app.route("/")
 def resume():
@@ -10,5 +9,7 @@ def resume():
 def contacts():
     return render_template("contacts.html", title="Контакти")
 
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.route("/homepage")
+def home():
+    agent = request.user_agent
+    return render_template("resume.html", agent=agent)
