@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %} Products Page {% endblock %}
+
+{% block content %}
+
+{% for product in products %}
+    <ul>
+        <li>
+            <a href="{{ url_for('products.product_by_id', id=product['id']) }}">{{ product["name"] }}</a>
+        </li>
+    </ul>    
+{% endfor %}
+
+{% endblock %}

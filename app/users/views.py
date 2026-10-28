@@ -1,5 +1,5 @@
 from flask import request, render_template, url_for, redirect
-from .. import user_bp
+from . import user_bp
 
 @user_bp.route("/hi/<string:name>")
 def greetings(name):

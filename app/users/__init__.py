@@ -7,4 +7,4 @@ user_bp = Blueprint(
     template_folder="templates/users"
 )
 
-from .templates import views
+from . import views
