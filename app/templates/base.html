@@ -12,12 +12,22 @@
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='css/styles.css') }}">
+
 </head>
 <body>
     
     {% include 'includes/navbar.html' %}
 
     <main class="container py-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
         {% block content %}{% endblock %}
     </main>
 

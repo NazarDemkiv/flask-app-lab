@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="profile-container {{ theme }}">
+    <h2>Профіль користувача</h2>
+
+    <a href="{{ url_for('users.logout')}}">Вийти</a>
+
+    <form method="post" class="form-section">
+        <label for="key">Ключ кукі</label>
+        <input type="text" name="key" id="key">
+
+        <label for="value">Значення кукі</label>
+        <input type="text" name="value" id="value">
+
+        <label for="exp">Термін дії</label>
+        <input type="number" name="exp" id="exp"> <br>
+
+        <button type="submit" class="add-cookie-button">Додати кукі</button>
+    </form>
+
+    <form method="post" class="form-section">
+        <label for="delete_key_cookie">Ключ кукі для видалення</label>
+        <input type="text" name="delete_key_cookie" id="delete_key_cookie"> <br>
+
+        <button type="submit" class="delete-cookie-button">Видалити кукі</button>
+    </form>
+
+    <form method="post">
+        <input type="submit" name="delete_all_cookies" value="Видалити всі cookie" class="delete-all-cookies-button">
+    </form>
+
+    <table class="cookies-table">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in cookies.items() %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="2">Немає збережених cookie</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Кольорова схема</h3>
+
+    <form method="post" action="{{ url_for('users.change_theme') }}">
+        <button type="submit" name="theme" value="light">
+            Світла тема
+        </button>
+
+        <button type="submit" name="theme" value="dark">
+            Темна тема
+        </button>
+    </form>
+</div>
+
+{% endblock %}

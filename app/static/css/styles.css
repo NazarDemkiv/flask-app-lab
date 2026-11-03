@@ -50,3 +50,86 @@ body {
         height: 120px;
     }
 }
+
+.form-section {
+    background-color: #ffffff;
+    padding: 24px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.add-cookie-button {
+    background-color: green;
+    color: white;   
+    border-radius: 10px;
+    width: 150px;
+}
+
+.delete-cookie-button {
+    background-color: yellow;
+    color: black;   
+    border-radius: 10px;
+    width: 150px;
+}
+
+.delete-all-cookies-button {
+    background-color: red;
+    color: white;   
+    border-radius: 10px;
+    width: 200px;
+}
+
+.cookies-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.cookies-table th,
+.cookies-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.cookies-table th {
+    background-color: #f2f2f2;
+}
+
+.cookies-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.profile-container {
+    min-height: 80vh;
+    padding: 30px;
+    border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.profile-container.light {
+    background-color: #ffffff;
+    color: #222222;
+}
+
+.profile-container.dark {
+    background-color: #222222;
+    color: #ffffff;
+}
+
+.profile-container.dark table {
+    color: #ffffff;
+}
+
+.profile-container.dark th {
+    background-color: #444444;
+}
+
+.profile-container.dark td {
+    border-color: #555555;
+}
+
+.profile-container.dark tr:nth-child(even) {
+    background-color: #333333;
+}
