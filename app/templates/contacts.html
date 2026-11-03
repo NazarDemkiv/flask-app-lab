@@ -13,50 +13,56 @@
 <section class="resume-section">
     <h2>Написати повідомлення</h2>
 
-    <form>
-        <div class="mb-3">
-            <label for="name" class="form-label">
-                Ваше ім'я
-            </label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                class="form-control"
-                required
-            >
-        </div>
+<form method="POST" action="{{ url_for('contacts') }}">
+    {{ form.hidden_tag() }}
 
-        <div class="mb-3">
-            <label for="email" class="form-label">
-                Email
-            </label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                class="form-control"
-                required
-            >
-        </div>
+    <div class="mb-3">
+        {{ form.name.label(class="form-label") }}
+        {{ form.name(class="form-control", placeholder="Ваше ім'я") }}
 
-        <div class="mb-3">
-            <label for="message" class="form-label">
-                Повідомлення
-            </label>
-            <textarea
-                id="message"
-                name="message"
-                class="form-control"
-                rows="5"
-                required
-            ></textarea>
-        </div>
+        {% for error in form.name.errors %}
+            <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
 
-        <button type="button" class="btn btn-primary">
-            Надіслати
-        </button>
-    </form>
+    <div class="mb-3">
+        {{ form.phone.label(class="form-label") }}
+        {{ form.phone(class="form-control", placeholder="Ваш телефон") }}
+
+        {% for error in form.phone.errors %}
+            <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.email.label(class="form-label") }}
+        {{ form.email(class="form-control", placeholder="Email") }}
+
+        {% for error in form.email.errors %}
+            <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.subject.label(class="form-label") }}
+        {{ form.subject(class="form-select") }}
+
+        {% for error in form.subject.errors %}
+            <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.message.label(class="form-label") }}
+        {{ form.message(class="form-control", rows="5") }}
+
+        {% for error in form.message.errors %}
+            <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    {{ form.submit(class="btn btn-primary") }}
+</form>
 </section>
 
 {% endblock %}
