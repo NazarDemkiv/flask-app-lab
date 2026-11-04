@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Додати товар{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Додати товар</h1>
+<form method="POST" enctype="multipart/form-data" novalidate>
+    {{ form.hidden_tag() }}
+    {% for field in [form.name, form.content, form.price, form.category, form.quantity, form.image] %}
+        <div class="mb-3">
+            {{ field.label(class="form-label") }}
+            {% if field.name == 'content' %}
+                {{ field(class="form-control", rows=5, cols=40) }}
+            {% elif field.name == 'image' %}
+                {{ field(class="form-control", accept=".png,.jpg,.jpeg") }}
+                <div class="form-text">PNG, JPG або JPEG. Максимальний розмір — 5 МБ.</div>
+            {% else %}
+                {{ field(class="form-control" if field.name != 'category' else "form-select") }}
+            {% endif %}
+            {% for error in field.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    {{ form.submit(class="btn btn-primary") }}
+    <a class="btn btn-secondary" href="{{ url_for('products.products_list') }}">Скасувати</a>
+</form>
+{% endblock %}

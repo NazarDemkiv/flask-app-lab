@@ -1,15 +1,37 @@
 {% extends 'base.html' %}
 
-{% block title %} Products Page {% endblock %}
+{% block title %}Товари{% endblock %}
 
 {% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Каталог товарів</h1>
+    <a class="btn btn-primary" href="{{ url_for('products.add_product') }}">Додати товар</a>
+</div>
 
-{% for product in products %}
-    <ul>
-        <li>
-            <a href="{{ url_for('products.product_by_id', id=product['id']) }}">{{ product["name"] }}</a>
-        </li>
-    </ul>    
-{% endfor %}
-
+{% if products %}
+    <div class="row g-4">
+        {% for product in products %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100">
+                    {% if product.image_url %}
+                        <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}" style="height: 210px; object-fit: contain;">
+                    {% else %}
+                        <div class="bg-light text-muted d-flex align-items-center justify-content-center" style="height: 210px;">Зображення відсутнє</div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{{ url_for('products.product_detail', product_id=product.id) }}">{{ product.name }}</a>
+                        </h5>
+                        <p class="mb-1">Категорія: {{ product.category }}</p>
+                        <p class="mb-1">Ціна: {{ '%.2f'|format(product.price) }}</p>
+                        <p class="mb-1">Кількість: {{ product.quantity }}</p>
+                        <small class="text-muted">Додано: {{ product.created_at }}</small>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Поки що товарів немає. Додайте перший товар.</p>
+{% endif %}
 {% endblock %}

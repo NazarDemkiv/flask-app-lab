@@ -1,18 +1,36 @@
 {% extends 'base.html' %}
 
-{% block title %} Product by id {% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
-
-{% if product %}
-    <p>
-        ID: {{product['id']}} <br>
-        Name: {{product['name']}} <br>
-        Price: {{product['price']}} <br>
-        Content: {{product['content']}} <br>
-    </p>
-{% else %}
-    <p>No information</p>
-{% endif %}
-
+<article class="card">
+    <div class="row g-0">
+        <div class="col-md-5">
+            {% if product.image_url %}
+                <img src="{{ product.image_url }}" class="img-fluid rounded-start p-3" alt="{{ product.name }}" style="max-height: 360px; width: 100%; object-fit: contain;">
+            {% else %}
+                <div class="bg-light text-muted d-flex align-items-center justify-content-center h-100">Зображення відсутнє</div>
+            {% endif %}
+        </div>
+        <div class="col-md-7">
+            <div class="card-body">
+                <h1 class="card-title">{{ product.name }}</h1>
+                <p><strong>ID:</strong> {{ product.id }}</p>
+                <p><strong>Категорія:</strong> {{ product.category }}</p>
+                <p><strong>Ціна:</strong> {{ '%.2f'|format(product.price) }}</p>
+                <p><strong>Кількість:</strong> {{ product.quantity }}</p>
+                <p><strong>Опис:</strong><br>{{ product.content }}</p>
+                <p><strong>Створено:</strong> {{ product.created_at }}</p>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a class="btn btn-warning" href="{{ url_for('products.edit_product', product_id=product.id) }}">Редагувати</a>
+                    <a class="btn btn-secondary" href="{{ url_for('products.products_list') }}">До списку</a>
+                    <form method="POST" action="{{ url_for('products.delete_product', product_id=product.id) }}" onsubmit="return confirm('Ви впевнені, що хочете видалити цей товар?');">
+                        {{ delete_form.hidden_tag() }}
+                        {{ delete_form.submit(class="btn btn-danger") }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
 {% endblock %}
