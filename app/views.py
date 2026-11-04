@@ -1,6 +1,18 @@
+import logging
 from . import app
 from flask import render_template, request, redirect, url_for, flash
 from .forms import ContactForm
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    handlers=[
+        logging.FileHandler("contacts.log", encoding="utf-8"),   # Save to file
+        logging.StreamHandler()          # Print to console
+    ]
+)
+
+logger = logging.getLogger(__name__)
 
 @app.route("/")
 def resume():
@@ -18,7 +30,7 @@ def contacts():
         message = cform.message.data
         flash("Form successfully sent", "success")
 
-        print(f"Name: {name}, Email: {email}, Phone: {phone}, Subject: {subject}, Message: {message}")
+        logger.info("Name: %s, Email: %s, Phone: %s, Subject: %s, Message: %s", name, email, phone, subject, message)
         return redirect(url_for("contacts"))
 
     return render_template("contacts.html", title="Контакти", form=cform)

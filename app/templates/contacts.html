@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from "macros.html" import render_field %}
 
 {% block content %}
 
@@ -14,55 +15,16 @@
     <h2>Написати повідомлення</h2>
 
 <form method="POST" action="{{ url_for('contacts') }}">
-    {{ form.hidden_tag() }}
+        {{ form.hidden_tag() }}
 
-    <div class="mb-3">
-        {{ form.name.label(class="form-label") }}
-        {{ form.name(class="form-control", placeholder="Ваше ім'я") }}
+        {{ render_field(form.name, placeholder="Ваше ім'я") }}
+        {{ render_field(form.phone, placeholder="Ваш телефон") }}
+        {{ render_field(form.email, placeholder="Email") }}
+        {{ render_field(form.subject, css_class="form-select") }}
+        {{ render_field(form.message, rows=5, placeholder="Ваше повідомлення") }}
 
-        {% for error in form.name.errors %}
-            <div class="text-danger">{{ error }}</div>
-        {% endfor %}
-    </div>
-
-    <div class="mb-3">
-        {{ form.phone.label(class="form-label") }}
-        {{ form.phone(class="form-control", placeholder="Ваш телефон") }}
-
-        {% for error in form.phone.errors %}
-            <div class="text-danger">{{ error }}</div>
-        {% endfor %}
-    </div>
-
-    <div class="mb-3">
-        {{ form.email.label(class="form-label") }}
-        {{ form.email(class="form-control", placeholder="Email") }}
-
-        {% for error in form.email.errors %}
-            <div class="text-danger">{{ error }}</div>
-        {% endfor %}
-    </div>
-
-    <div class="mb-3">
-        {{ form.subject.label(class="form-label") }}
-        {{ form.subject(class="form-select") }}
-
-        {% for error in form.subject.errors %}
-            <div class="text-danger">{{ error }}</div>
-        {% endfor %}
-    </div>
-
-    <div class="mb-3">
-        {{ form.message.label(class="form-label") }}
-        {{ form.message(class="form-control", rows="5") }}
-
-        {% for error in form.message.errors %}
-            <div class="text-danger">{{ error }}</div>
-        {% endfor %}
-    </div>
-
-    {{ form.submit(class="btn btn-primary") }}
-</form>
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
 </section>
 
 {% endblock %}
