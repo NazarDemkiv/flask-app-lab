@@ -1,0 +1,80 @@
+.posts-header {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #e6eaf0;
+}
+
+.posts-eyebrow {
+    color: #0d6efd;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+}
+
+.post-card {
+    overflow: hidden;
+    border: 1px solid #e9edf3;
+    border-radius: 1rem;
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 .75rem 1.75rem rgba(24, 39, 75, .09);
+}
+
+.post-card-image {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+}
+
+.post-category {
+    display: inline-block;
+    padding: .3rem .65rem;
+    border-radius: 999px;
+    background: #eaf2ff;
+    color: #1557ad;
+    font-size: .78rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.posts-empty,
+.post-form-card,
+.delete-confirm {
+    max-width: 760px;
+    border: 1px solid #e9edf3;
+    border-radius: 1rem;
+}
+
+.post-detail {
+    max-width: 920px;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 1px solid #e9edf3;
+    border-radius: 1rem;
+}
+
+.post-detail-image {
+    width: 100%;
+    max-height: 280px;
+    object-fit: cover;
+}
+
+.post-content {
+    white-space: pre-wrap;
+    line-height: 1.8;
+}
+
+.delete-icon {
+    display: inline-flex;
+    width: 3rem;
+    height: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff0f0;
+    color: #dc3545;
+    font-size: 1.6rem;
+    font-weight: 700;
+}

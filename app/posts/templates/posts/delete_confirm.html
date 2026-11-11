@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Підтвердження видалення{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('posts.static', filename='css/posts.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="delete-confirm card shadow-sm mx-auto">
+    <div class="card-body p-4 p-lg-5 text-center">
+        <div class="delete-icon mb-3">!</div>
+        <h1 class="h3">Видалити пост?</h1>
+        <p class="text-muted">Ви дійсно хочете видалити публікацію «{{ post.title }}»? Цю дію неможливо скасувати.</p>
+        <form method="POST" action="{{ url_for('posts.delete_post', post_id=post.id) }}" class="d-flex justify-content-center flex-wrap gap-2 mt-4">
+            {{ form.hidden_tag() }}
+            {{ form.submit(class="btn btn-danger") }}
+            <a class="btn btn-outline-secondary" href="{{ url_for('posts.post_detail', post_id=post.id) }}">Скасувати</a>
+        </form>
+    </div>
+</section>
+{% endblock %}

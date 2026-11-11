@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Публікації{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('posts.static', filename='css/posts.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="posts-header d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+        <p class="posts-eyebrow mb-1">БЛОГ</p>
+        <h1 class="mb-0">Публікації</h1>
+        <p class="text-muted mb-0">Новини, матеріали та корисні думки</p>
+    </div>
+    <a class="btn btn-primary" href="{{ url_for('posts.create_post') }}">+ Add Post</a>
+</section>
+
+{% if posts %}
+    <div class="row g-4">
+        {% for post in posts %}
+            <div class="col-sm-6 col-xl-4">
+                <article class="card post-card h-100">
+                    <img
+                        src="{{ url_for('posts.static', filename='img/postdefault.jpg') }}"
+                        class="card-img-top post-card-image"
+                        alt="Зображення публікації"
+                    >
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
+                            <span class="post-category">{{ post.category }}</span>
+                            <small class="text-muted">{{ post.posted.strftime('%d.%m.%Y %H:%M') }}</small>
+                        </div>
+                        <h2 class="h5 card-title">{{ post.title }}</h2>
+                        <p class="card-text text-muted">{{ post.content[:100] }}{% if post.content|length > 100 %}…{% endif %}</p>
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <small class="text-muted">Автор: {{ post.author }}</small>
+                            <a class="btn btn-outline-primary btn-sm" href="{{ url_for('posts.post_detail', post_id=post.id) }}">Переглянути</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="posts-empty text-center py-5">
+        <h2 class="h4">Публікацій поки немає</h2>
+        <p class="text-muted">Створіть перший пост, щоб він з'явився тут.</p>
+        <a class="btn btn-primary" href="{{ url_for('posts.create_post') }}">Створити пост</a>
+    </div>
+{% endif %}
+{% endblock %}

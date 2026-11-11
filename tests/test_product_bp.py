@@ -2,28 +2,26 @@ import tempfile
 import unittest
 from io import BytesIO
 from pathlib import Path
+from unittest.mock import patch
 
-from app import app
+from app import create_app
 
 
 class ProductCrudTestCase(unittest.TestCase):
     def setUp(self):
         self.temp_dir = tempfile.TemporaryDirectory()
-        self.old_db_path = app.config.get("PRODUCTS_DB_PATH")
-        self.old_csrf = app.config.get("WTF_CSRF_ENABLED", True)
-        app.config.update(
+        self.upload_patcher = patch("app.products.views.UPLOAD_FOLDER", Path(self.temp_dir.name) / "uploads")
+        self.upload_patcher.start()
+        self.app = create_app("testing")
+        self.app.config.update(
             TESTING=True,
             WTF_CSRF_ENABLED=False,
             PRODUCTS_DB_PATH=Path(self.temp_dir.name) / "products.json",
         )
-        self.client = app.test_client()
+        self.client = self.app.test_client()
 
     def tearDown(self):
-        if self.old_db_path is None:
-            app.config.pop("PRODUCTS_DB_PATH", None)
-        else:
-            app.config["PRODUCTS_DB_PATH"] = self.old_db_path
-        app.config["WTF_CSRF_ENABLED"] = self.old_csrf
+        self.upload_patcher.stop()
         self.temp_dir.cleanup()
 
     def create_product(self, **overrides):

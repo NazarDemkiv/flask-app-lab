@@ -1,41 +1,40 @@
 import logging
-from . import app
-from flask import render_template, request, redirect, url_for, flash
-from .forms import ContactForm
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-    handlers=[
-        logging.FileHandler("contacts.log", encoding="utf-8"),   # Save to file
-        logging.StreamHandler()          # Print to console
-    ]
-)
+from flask import flash, redirect, render_template, request, url_for
+
+from .forms import ContactForm
 
 logger = logging.getLogger(__name__)
 
-@app.route("/")
+
 def resume():
     return render_template("resume.html", title="Моє резюме")
 
-@app.route("/contacts", methods = ["GET", "POST"])
+
 def contacts():
-    cform = ContactForm()
-
-    if cform.validate_on_submit():
-        name = cform.name.data
-        email = cform.email.data
-        phone = cform.phone.data
-        subject = cform.subject.data
-        message = cform.message.data
-        flash("Form successfully sent", "success")
-
-        logger.info("Name: %s, Email: %s, Phone: %s, Subject: %s, Message: %s", name, email, phone, subject, message)
+    form = ContactForm()
+    if form.validate_on_submit():
+        logger.info(
+            "Contact form submitted: name=%s, email=%s, subject=%s",
+            form.name.data,
+            form.email.data,
+            form.subject.data,
+        )
+        flash("Повідомлення успішно надіслано.", "success")
         return redirect(url_for("contacts"))
 
-    return render_template("contacts.html", title="Контакти", form=cform)
+    return render_template("contacts.html", title="Контакти", form=form)
 
-@app.route("/homepage")
+
 def home():
     agent = request.user_agent
-    return render_template("resume.html", agent=agent)
+    return render_template("resume.html", title="Головна", agent=agent)
+
+
+def register_main_routes(app):
+    """Register legacy site pages without creating a second Flask app."""
+    app.add_url_rule("/", endpoint="resume", view_func=resume)
+    app.add_url_rule(
+        "/contacts", endpoint="contacts", view_func=contacts, methods=["GET", "POST"]
+    )
+    app.add_url_rule("/homepage", endpoint="home", view_func=home)
