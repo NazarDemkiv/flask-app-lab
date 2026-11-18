@@ -54,7 +54,6 @@ def _form_values(form) -> dict:
     return {
         "name": form.name.data.strip(),
         "content": form.content.data.strip(),
-        # Store as a JSON number rounded to two decimal places.
         "price": round(float(form.price.data), 2),
         "category": form.category.data,
         "quantity": form.quantity.data,

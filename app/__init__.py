@@ -32,9 +32,8 @@ def create_app(config_name: str = "development") -> Flask:
         )
         session.init_app(app)
 
-    # Import models before initializing Flask-Migrate so that Alembic can
-    # discover all SQLAlchemy tables in db.metadata.
-    from .posts.models import Post  # noqa: F401
+    from .posts.models import Post 
+    from .products.models import Product
 
     migrate.init_app(app, db)
 

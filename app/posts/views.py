@@ -7,7 +7,6 @@ from .models import Post
 
 
 def _assign_form_to_post(form: PostForm, post: Post) -> None:
-    """Copy form fields whose names differ from the ORM model explicitly."""
     post.title = form.title.data.strip()
     post.content = form.content.data.strip()
     post.is_active = bool(form.enabled.data)
@@ -58,7 +57,6 @@ def update_post(post_id: int):
     post = db.get_or_404(Post, post_id)
     if request.method == "GET":
         form = PostForm(obj=post)
-        # Form and model use different names for these two attributes.
         form.enabled.data = post.is_active
         form.publish_date.data = post.posted
     else:
