@@ -32,8 +32,10 @@ def create_app(config_name: str = "development") -> Flask:
         )
         session.init_app(app)
 
-    from .posts.models import Post 
+    # Import every model before Flask-Migrate reads SQLAlchemy metadata.
+    from .posts.models import Post, Tag
     from .products.models import Product
+    from .users.models import User
 
     migrate.init_app(app, db)
 

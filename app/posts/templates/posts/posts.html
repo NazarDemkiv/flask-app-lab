@@ -34,7 +34,7 @@
                         <h2 class="h5 card-title">{{ post.title }}</h2>
                         <p class="card-text text-muted">{{ post.content[:100] }}{% if post.content|length > 100 %}…{% endif %}</p>
                         <div class="mt-auto d-flex justify-content-between align-items-center">
-                            <small class="text-muted">Автор: {{ post.author }}</small>
+                            <small class="text-muted">Автор: {{ post.user.username }}</small>
                             <a class="btn btn-outline-primary btn-sm" href="{{ url_for('posts.post_detail', post_id=post.id) }}">Переглянути</a>
                         </div>
                     </div>

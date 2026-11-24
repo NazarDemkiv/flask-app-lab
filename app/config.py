@@ -18,6 +18,8 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    # Show SQL statements in the console for laboratory work 8.
+    SQLALCHEMY_ECHO = True
 
 
 class TestingConfig(Config):

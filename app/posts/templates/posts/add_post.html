@@ -11,6 +11,13 @@
 <section class="post-form-card card shadow-sm mx-auto">
     <div class="card-body p-4 p-lg-5">
         <h1 class="h2 mb-4">{{ page_heading }}</h1>
+
+        {% if not form.author_id.choices %}
+            <div class="alert alert-warning">
+                У базі даних поки немає авторів. Спочатку додайте користувачів через <code>flask shell</code>.
+            </div>
+        {% endif %}
+
         <form method="POST" novalidate>
             {{ form.hidden_tag() }}
             {{ render_field(form.title, placeholder="Введіть заголовок поста") }}
@@ -24,8 +31,15 @@
             </div>
             {{ render_field(form.publish_date) }}
             {{ render_field(form.category, css_class="form-select") }}
+            {{ render_field(form.author_id, css_class="form-select") }}
+            <div class="mb-3">
+                {{ form.tags.label(class="form-label") }}
+                {{ form.tags(class="form-select", size=5) }}
+                <div class="form-text">Щоб вибрати кілька тегів, утримуйте Ctrl (Windows) або Command (Mac).</div>
+                {% for error in form.tags.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+            </div>
             <div class="d-flex flex-wrap gap-2">
-                {{ form.submit(class="btn btn-primary") }}
+                {{ form.submit(class="btn btn-primary", disabled=not form.author_id.choices) }}
                 <a class="btn btn-outline-secondary" href="{{ url_for('posts.post_list') }}">Скасувати</a>
             </div>
         </form>

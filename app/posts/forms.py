@@ -1,7 +1,14 @@
 from datetime import datetime
 
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, SelectField, StringField, SubmitField, TextAreaField
+from wtforms import (
+    BooleanField,
+    SelectField,
+    SelectMultipleField,
+    StringField,
+    SubmitField,
+    TextAreaField,
+)
 from wtforms.fields import DateTimeLocalField
 from wtforms.validators import DataRequired, Length
 
@@ -31,8 +38,18 @@ class PostForm(FlaskForm):
         validators=[DataRequired(message="Вкажіть дату та час публікації.")],
     )
     category = SelectField(
-        "Категорія", choices=CATEGORY_CHOICES, default="other", validators=[DataRequired()]
+        "Категорія",
+        choices=CATEGORY_CHOICES,
+        default="other",
+        validators=[DataRequired()],
     )
+    author_id = SelectField(
+        "Автор",
+        coerce=int,
+        choices=[],
+        validators=[DataRequired(message="Оберіть автора.")],
+    )
+    tags = SelectMultipleField("Теги", coerce=int, choices=[])
     submit = SubmitField("Зберегти")
 
 
