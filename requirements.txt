@@ -5,3 +5,7 @@ Flask-SQLAlchemy>=3.1,<4.0
 Flask-WTF>=1.2,<2.0
 python-dotenv>=1.0,<2.0
 TinyDB>=4.8,<5.0
+
+Flask-Bcrypt>=1.0.1,<2.0
+Flask-Login>=0.6.3,<1.0
+email-validator>=2.2,<3.0

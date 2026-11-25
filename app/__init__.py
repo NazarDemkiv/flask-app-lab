@@ -3,7 +3,7 @@ from pathlib import Path
 from flask import Flask, render_template
 
 from .config import DevelopmentConfig, ProductionConfig, TestingConfig
-from .extensions import db, migrate, session
+from .extensions import bcrypt, db, login_manager, migrate, session
 
 
 CONFIGURATIONS = {
@@ -26,6 +26,11 @@ def create_app(config_name: str = "development") -> Flask:
     Path(app.instance_path).mkdir(parents=True, exist_ok=True)
 
     db.init_app(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+    login_manager.login_view = "users.login"
+    login_manager.login_message = "Будь ласка, увійдіть, щоб отримати доступ до цієї сторінки."
+    login_manager.login_message_category = "warning"
     if app.config.get("SERVER_SIDE_SESSIONS", False):
         app.config.setdefault(
             "SESSION_FILE_DIR", str(Path(app.instance_path) / "flask_session")
@@ -36,6 +41,13 @@ def create_app(config_name: str = "development") -> Flask:
     from .posts.models import Post, Tag
     from .products.models import Product
     from .users.models import User
+
+    @login_manager.user_loader
+    def load_user(user_id: str):
+        try:
+            return db.session.get(User, int(user_id))
+        except (TypeError, ValueError):
+            return None
 
     migrate.init_app(app, db)
 

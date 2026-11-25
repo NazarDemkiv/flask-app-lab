@@ -1,3 +1,5 @@
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
@@ -10,9 +12,9 @@ convention = {
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
     "pk": "pk_%(table_name)s",
 }
-
 metadata = MetaData(naming_convention=convention)
-
 db = SQLAlchemy(metadata=metadata)
 migrate = Migrate()
 session = Session()
+bcrypt = Bcrypt()
+login_manager = LoginManager()
